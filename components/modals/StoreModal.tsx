@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useState } from "react";
 import Modal from "@/components/ui/modal";
 import * as z from "zod";
 
@@ -10,8 +10,11 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Button } from "@/components/ui/button";
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
+import { Form, FormControl, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+
+import axios from "axios";
+import toast from "react-hot-toast";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must contain atleast 2 character(s)").max(50, "Name is too long"),
@@ -22,6 +25,7 @@ const StoreModal = () => {
 
   // modal state
   const isOpen = useAppSelector((state) => state.modal.isOpen);
+  const [isLoading, setIsloading] = useState<boolean>(false);
   const onClose = () => dispatch(setModal(false));
 
   // 1. Define your form.
@@ -33,10 +37,18 @@ const StoreModal = () => {
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    console.log(values);
+  async function onSubmit(payload: z.infer<typeof formSchema>) {
+    try {
+      setIsloading(true);
+      const { data } = await axios.post("/api/stores", payload);
+      console.log("store", data);
+      toast.success("Store created successfully");
+    } catch (error) {
+      toast.error("Problem creating store !");
+      console.error(error)
+    } finally {
+      setIsloading(false);
+    }
   }
 
   return (
@@ -63,10 +75,12 @@ const StoreModal = () => {
               )}
             />
             <div className="flex justify-end items-center w-full  gap-x-3">
-              <Button variant="outline" onClick={() => dispatch(setModal(false))}>
+              <Button variant="outline" disabled={isLoading} onClick={() => dispatch(setModal(false))}>
                 Cancel
               </Button>
-              <Button type="submit">Submit</Button>
+              <Button type="submit" disabled={isLoading}>
+                Submit
+              </Button>
             </div>
           </form>
         </Form>

@@ -1,9 +1,10 @@
-import type { Metadata } from "next";
 import { ClerkProvider } from "@clerk/nextjs";
+import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 
-import ReduxProvider from "@/store/ReduxProvider";
 import ModalProvider from "@/providers/ModalProvider";
+import ReduxProvider from "@/store/ReduxProvider";
+import ToastProvider from "@/providers/toastProvider";
 
 import "./globals.css";
 
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <ReduxProvider>
         <html lang="en">
           <body className={inter.className}>
+            <ToastProvider/>
             <ModalProvider />
             {children}
           </body>

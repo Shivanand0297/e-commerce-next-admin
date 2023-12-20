@@ -15,11 +15,7 @@ const SetupPage = () => {
     }
   }, [isOpen, dispatch])
 
-  return (
-    <div>
-      this is protected route
-    </div>
-  );
+  return null;
 };
 
 export default SetupPage;
