@@ -25,6 +25,8 @@ const StoreModal = () => {
 
   // modal state
   const isOpen = useAppSelector((state) => state.modal.isOpen);
+
+  // TODO: Use react query instead of axios adn manage server state
   const [isLoading, setIsloading] = useState<boolean>(false);
   const onClose = () => dispatch(setModal(false));
 
