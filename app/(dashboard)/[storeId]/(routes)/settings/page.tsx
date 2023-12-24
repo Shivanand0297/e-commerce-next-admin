@@ -1,12 +1,8 @@
 import { redirect } from "next/navigation";
-import { Button } from "@/components/ui/button";
-import { Trash } from "lucide-react";
+import { auth } from "@clerk/nextjs";
 
-import Heading from "@/components/ui/heading";
 import prismadb from "@/lib/prismadb";
 import SettingForm from "./components/SettingForm";
-import { Separator } from "@/components/ui/separator";
-import { auth } from "@clerk/nextjs";
 
 type SettingsProps = {
   params: { storeId: string };

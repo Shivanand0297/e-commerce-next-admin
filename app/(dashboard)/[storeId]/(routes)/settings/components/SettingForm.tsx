@@ -16,6 +16,8 @@ import { Input } from "@/components/ui/input";
 import { Separator } from "@/components/ui/separator";
 import Heading from "@/components/ui/heading";
 import AlertModal from "@/components/modals/AlertModal";
+import ApiAlert from "@/components/modals/ApiAlert";
+import useOrigin from "@/hooks/useOrigin";
 
 type Props = {
   initialData: Store;
@@ -28,11 +30,12 @@ const formSchema = z.object({
 type SettingFormValues = z.infer<typeof formSchema>;
 
 const SettingForm = ({ initialData }: Props) => {
+  const router = useRouter();
+  const { storeId } = useParams();
+  const origin = useOrigin();
+  
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [isOpen, setIsOpen] = useState<boolean>(false);
-  const router = useRouter();
-
-  const { storeId } = useParams();
 
   const form = useForm<SettingFormValues>({
     resolver: zodResolver(formSchema),
@@ -70,7 +73,7 @@ const SettingForm = ({ initialData }: Props) => {
       setIsLoading(false);
     }
   };
-
+  
   return (
     <>
       <div className="flex justify-between items-center">
@@ -102,6 +105,7 @@ const SettingForm = ({ initialData }: Props) => {
           </Button>
         </form>
       </Form>
+      <Separator />
       <AlertModal
         isOpen={isOpen}
         isLoading={isLoading}
@@ -109,6 +113,11 @@ const SettingForm = ({ initialData }: Props) => {
         onConfirm={handleStoreDelete}
         title="Are you sure ?"
         description="This action cannot be undone!"
+      />
+      <ApiAlert 
+        title="NEXT_PUBLIC_API_URL" 
+        description={`${origin}/api/${storeId}`}
+        variant="public"
       />
     </>
   );
