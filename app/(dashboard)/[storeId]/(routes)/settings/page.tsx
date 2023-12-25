@@ -27,7 +27,7 @@ const SettingsPage = async ({ params }: SettingsProps) => {
   }
 
   return (
-    <div className="flex-col">
+    <div className="flex flex-col">
       <div className="flex-1 space-y-4 p-8 pt-6">
         <SettingForm initialData={store} />
       </div>
