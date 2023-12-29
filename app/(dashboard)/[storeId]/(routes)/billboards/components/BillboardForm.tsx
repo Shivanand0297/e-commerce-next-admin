@@ -72,7 +72,7 @@ const BillboardForm = ({ initialData }: Props) => {
     }
   };
 
-  const handleStoreDelete = async () => {
+  const handleDelete = async () => {
     try {
       setIsLoading(true);
       await axios.delete(`/api/${storeId}/billboards/${billboardId}`);
@@ -143,7 +143,7 @@ const BillboardForm = ({ initialData }: Props) => {
         isOpen={isOpen}
         isLoading={isLoading}
         onClose={() => setIsOpen(false)}
-        onConfirm={handleStoreDelete}
+        onConfirm={handleDelete}
         title="Are you sure ?"
         description="This action cannot be undone!"
       />
