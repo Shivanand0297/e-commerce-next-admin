@@ -7,6 +7,7 @@ import { Plus } from "lucide-react";
 import { useParams, useRouter } from "next/navigation";
 import { BillboardColumn, columns } from "./columns";
 import { DataTable } from "@/components/ui/data-table";
+import ApiList from "@/components/ui/api-list";
 
 type Props = {
   billboards: BillboardColumn[];
@@ -28,6 +29,11 @@ const BillboardClient = ({ billboards }: Props) => {
       </div>
       <Separator className="mt-3"/>
       <DataTable columns={columns} data={billboards} searchKey="label" />
+      {/* api list  component */}
+      <ApiList
+        entityName="billboards"
+        entityIdName="billboardId"
+      />
     </>
   );
 };

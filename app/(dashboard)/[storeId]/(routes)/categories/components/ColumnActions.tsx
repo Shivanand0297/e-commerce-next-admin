@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import AlertModal from "@/components/modals/AlertModal";
 import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { BillboardColumn } from "./columns";
+import { CategoryColumn } from "./columns";
 import { Copy, Edit, MoreHorizontal, Trash, View } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 
 type Props = {
-  data: BillboardColumn;
+  data: CategoryColumn;
 };
 
 const ColumnActions = ({ data }: Props) => {
@@ -45,13 +45,13 @@ const ColumnActions = ({ data }: Props) => {
   };
 
   const handleEdit = () => {
-    router.push(`/${storeId}/billboards/${data.id}`);
+    router.push(`/${storeId}/categories/${data.id}`);
   };
 
   const handleDelete = async () => {
     try {
       setIsLoading(true);
-      await axios.delete(`/api/${storeId}/billboards/${data.id}`);
+      await axios.delete(`/api/${storeId}/categories/${data.id}`);
       router.refresh();
       toast.success("Billboard deleted successfully");
     } catch (error) {

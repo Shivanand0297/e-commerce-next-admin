@@ -1,7 +1,7 @@
+import { Suspense } from "react";
 import moment from "moment";
 import prismadb from "@/lib/prismadb";
-import BillboardClient from "./components/BillboardClient";
-import { Suspense } from "react";
+import CategoryClient from "./components/CategoryClient";
 
 type Props = {
   params: {
@@ -9,19 +9,23 @@ type Props = {
   };
 };
 
-const BillboardsPage = async ({ params }: Props) => {
-  const billboards = await prismadb.billboard.findMany({
+const CategoriesPage = async ({ params }: Props) => {
+  const categories = await prismadb.category.findMany({
     where: {
       storeId: params.storeId,
+    },
+    include: {
+      billboard: true
     },
     orderBy: {
       createdAt: "desc",
     },
   });
 
-  const formattedBillboards = billboards.map((data) => ({
+  const formattedCategories = categories.map((data) => ({
     id: data.id,
-    label: data.label,
+    name: data.name,
+    billboardLabel: data.billboard.label,
     createdAt: moment(data.createdAt).format("DD, MMM YYYY"),
   }));
 
@@ -29,11 +33,11 @@ const BillboardsPage = async ({ params }: Props) => {
     <Suspense fallback="loading">
       <div className="flex flex-col">
         <div className="flex-1 gap-4 p-8 pt-6">
-          <BillboardClient billboards={formattedBillboards} />
+          <CategoryClient categories={formattedCategories} />
         </div>
       </div>
     </Suspense>
   );
 };
 
-export default BillboardsPage;
+export default CategoriesPage;
