@@ -36,7 +36,12 @@ export const columns: ColumnDef<ColorColumn>[] = [
       );
     },
     cell: ({ row }) => {
-      return <div className="w-8 h-8 rounded-full border-2" style={{ backgroundColor: row.original.value}}></div>
+      return (
+        <div className="flex items-center gap-5">
+          <span>{row.original.value}</span>
+          <div className="w-8 h-8 rounded-full border-2" style={{ backgroundColor: row.original.value}}></div>
+        </div>
+      )
     }
   },
   {
