@@ -10,7 +10,7 @@ type Props = {
   url: string[];
   disabled: boolean;
   onChange: (url: string) => void;
-  onRemove: () => void;
+  onRemove: (url: string) => void;
 };
 
 const ImageUpload = ({ url, disabled, onChange, onRemove }: Props) => {
@@ -36,7 +36,7 @@ const ImageUpload = ({ url, disabled, onChange, onRemove }: Props) => {
                 type="button" 
                 variant="destructive" 
                 disabled={disabled}
-                onClick={() => onRemove()} 
+                onClick={() => onRemove(url)} 
               >
                 <Trash className="w-4 h-4" />
               </Button>
